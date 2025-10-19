@@ -33,10 +33,10 @@ function Modal(props: IModalProps) {
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
               transition
-              className="w-full bg-white max-w-md rounded-xl  p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
+              className="w-full bg-white max-w-md rounded-lg  p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
             >
               <DialogTitle
-                as="h3"
+                as="h2"
                 className="text-base/7 font-medium text-black"
               >
                 {title}

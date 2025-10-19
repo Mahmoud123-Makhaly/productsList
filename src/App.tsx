@@ -1,9 +1,10 @@
 import { useState } from "react";
 import ProductCard from "./components/product-card/ProductCard";
 import Modal from "./components/ui/Modal";
-import { productList } from "./data/data";
+import { formInputsList, productList } from "./data/data";
 import type { IProduct } from "./interfaces";
 import Button from "./components/ui/Button";
+import Input from "./components/ui/Input";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +19,7 @@ const App = () => {
   return (
     <main className="p-3">
       <div className="container mx-auto">
-        <div className="flex   justify-between mb-4 ">
+        <div className="flex   justify-between mb-3 ">
           <h3 className="flex-1"> Product List </h3>
           <Button
             width="w-fit"
@@ -36,13 +37,23 @@ const App = () => {
           ))}
         </div>
         <Modal isOpen={isOpen} close={close} title="Add Product">
-          <div className="flex items-center space-x-3">
-            <Button className="bg-indigo-700 hover:bg-indigo-800">
-              Submit
-            </Button>
-            <Button className="bg-gray-300 hover:bg-gray-400" onClick={close}>
-              Cancel
-            </Button>
+          <div className="flex flex-col space-y-3">
+            <form>
+              {formInputsList.map((input) => (
+                <div key={input.id} className="flex flex-col gap-1 mb-3">
+                  <label htmlFor={input.id}>{input.label}</label>
+                  <Input type="text" id={input.id} name={input.name} />
+                </div>
+              ))}
+            </form>
+            <div className="flex items-center space-x-3">
+              <Button className="bg-indigo-700 hover:bg-indigo-800">
+                Submit
+              </Button>
+              <Button className="bg-gray-300 hover:bg-gray-400" onClick={close}>
+                Cancel
+              </Button>
+            </div>
           </div>
         </Modal>
       </div>
