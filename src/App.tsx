@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import ProductCard from "./components/product-card/ProductCard";
 import Modal from "./components/ui/Modal";
 import { formInputsList, productList } from "./data/data";
@@ -13,6 +13,8 @@ const App = () => {
     description: "",
     imageURL: "",
     price: "",
+    colors: [],
+    category: { name: "", imageURL: "" },
   });
   const open = () => {
     setIsOpen(true);
@@ -27,6 +29,20 @@ const App = () => {
       ...product,
       [name]: value,
     });
+  };
+
+  const onCancel = () => {
+    close();
+    setProduct({
+      title: "",
+      description: "",
+      imageURL: "",
+      price: "",
+    });
+  };
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Submitted Product:", product);
   };
   return (
     <main className="p-3">
@@ -50,7 +66,7 @@ const App = () => {
         </div>
         <Modal isOpen={isOpen} close={close} title="Add Product">
           <div className="flex flex-col space-y-3">
-            <form>
+            <form onSubmit={handleFormSubmit}>
               {formInputsList.map((input) => (
                 <div key={input.id} className="flex flex-col gap-1 mb-3">
                   <label htmlFor={input.id}>{input.label}</label>
@@ -63,15 +79,18 @@ const App = () => {
                   />
                 </div>
               ))}
+              <div className="flex items-center space-x-3">
+                <Button className="bg-indigo-700 hover:bg-indigo-800">
+                  Submit
+                </Button>
+                <Button
+                  className="bg-gray-300 hover:bg-gray-400"
+                  onClick={onCancel}
+                >
+                  Cancel
+                </Button>
+              </div>
             </form>
-            <div className="flex items-center space-x-3">
-              <Button className="bg-indigo-700 hover:bg-indigo-800">
-                Submit
-              </Button>
-              <Button className="bg-gray-300 hover:bg-gray-400" onClick={close}>
-                Cancel
-              </Button>
-            </div>
           </div>
         </Modal>
       </div>
