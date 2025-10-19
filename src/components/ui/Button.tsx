@@ -9,7 +9,7 @@ const Button = (props: IButtonsProps) => {
   const { className, children, width = "w-full", ...rest } = props;
   return (
     <button
-      className={`p-2 rounded-md text-white ${width} flex-1 cursor-pointer
+      className={`p-2 rounded-md text-white ${width}  cursor-pointer
    ${className} 
 `}
       {...rest}
