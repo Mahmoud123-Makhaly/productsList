@@ -3,11 +3,18 @@
 import type { IProduct } from "../interfaces";
 
 export const productValidation = (product: Partial<IProduct>) => {
-  const errors: Partial<IProduct> = {
+  const errors: Partial<{
+    title: string;
+    description: string;
+    imageURL: string;
+    price: string;
+    colors: string;
+  }> = {
     title: "",
     description: "",
     imageURL: "",
     price: "",
+    colors: "",
   };
   if (
     !product.title?.trim() ||
@@ -33,6 +40,9 @@ export const productValidation = (product: Partial<IProduct>) => {
   }
   if (Number(product.price) < 0 || isNaN(Number(product.price))) {
     errors.price = "Invalid price";
+  }
+  if (product.colors?.length === 0) {
+    errors.colors = "Please select at least one color";
   }
   return errors;
 };

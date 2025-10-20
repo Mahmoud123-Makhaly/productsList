@@ -1,13 +1,14 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import ProductCard from "./components/product-card/ProductCard";
 import Modal from "./components/ui/Modal";
-import { colors, formInputsList, productList } from "./data/data";
+import { categories, colors, formInputsList, productList } from "./data/data";
 import type { IProduct } from "./interfaces";
 import Button from "./components/ui/Button";
 import Input from "./components/ui/Input";
 import { productValidation } from "./validation";
 import ErrorMessage from "./components/error-message/ErrorMessage";
 import CircleColor from "./components/circle-color/CircleColor";
+import Select from "./components/ui/Select";
 
 const App = () => {
   const [products, setProducts] = useState<IProduct[]>(productList);
@@ -20,14 +21,21 @@ const App = () => {
     colors: [],
     category: { name: "", imageURL: "" },
   });
-  const [error, setError] = useState<Partial<IProduct>>({
+  const [error, setError] = useState<{
+    title: string;
+    description: string;
+    imageURL: string;
+    price: string;
+    colors: string;
+  }>({
     title: "",
     description: "",
     imageURL: "",
     price: "",
+    colors: "",
   });
   const [tempColors, setTempColors] = useState<string[]>([]);
-  console.log(tempColors);
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const open = () => {
     setIsOpen(true);
   };
@@ -55,6 +63,7 @@ const App = () => {
       colors: [],
       category: { name: "", imageURL: "" },
     });
+    setTempColors([]);
   };
   const onCancel = () => {
     close();
@@ -64,6 +73,7 @@ const App = () => {
       description: "",
       imageURL: "",
       price: "",
+      colors: "",
     });
   };
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -73,6 +83,7 @@ const App = () => {
       description: product.description,
       imageURL: product.imageURL,
       price: product.price,
+      colors: tempColors,
     });
 
     const validEnteredValues =
@@ -83,7 +94,7 @@ const App = () => {
         ...product,
         id: crypto.randomUUID(),
         colors: tempColors,
-        category: { name: "category name", imageURL: "" },
+        category: selectedCategory,
       };
       setProducts((prev) => [...prev, newProduct as IProduct]);
       close();
@@ -91,15 +102,19 @@ const App = () => {
       setTempColors([]);
     } else {
       setError(error);
+      console.log(error);
     }
   };
   const handleAddColor = (color: string) => {
     setTempColors((prev) =>
-      prev.includes(color)
-        ? prev.filter((color) => color !== color)
-        : [...prev, color]
+      prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
     );
+    setError((prev) => ({
+      ...prev,
+      colors: "",
+    }));
   };
+
   return (
     <main className="p-3">
       <div className="container mx-auto">
@@ -148,6 +163,10 @@ const App = () => {
                     {color}
                   </span>
                 ))}
+                <Select
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
+                />
               </div>
 
               <div className="flex items-center gap-2 flex-wrap my-3">
@@ -158,6 +177,7 @@ const App = () => {
                     onClick={() => handleAddColor(color)}
                   />
                 ))}
+                <ErrorMessage message={error.colors} />
               </div>
               <div className="flex items-center space-x-3">
                 <Button className="bg-indigo-700 hover:bg-indigo-800">
