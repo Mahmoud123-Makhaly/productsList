@@ -3,6 +3,7 @@ import type { IProduct } from "../../interfaces";
 import Button from "../ui/Button";
 import Image from "../ui/Image";
 import { textSlicer } from "../../utils/Functions";
+import CircleColor from "../circle-color/CircleColor";
 interface IProductCardProps {
   product: IProduct;
 }
@@ -18,10 +19,7 @@ const ProductCard = (props: IProductCardProps) => {
       <div className="flex items-center gap-2">
         {colors.map((color) => (
           <Fragment key={color}>
-            <span
-              className="w-5 h-5 cursor-pointer rounded-full"
-              style={{ background: color }}
-            ></span>
+            <CircleColor color={color} />
           </Fragment>
         ))}
       </div>
