@@ -102,7 +102,6 @@ const App = () => {
       setTempColors([]);
     } else {
       setError(error);
-      console.log(error);
     }
   };
   const handleAddColor = (color: string) => {

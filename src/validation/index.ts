@@ -38,7 +38,11 @@ export const productValidation = (product: Partial<IProduct>) => {
   if (!product.imageURL?.trim() || !imageUrlMatch) {
     errors.imageURL = "Invalid image URL";
   }
-  if (Number(product.price) < 0 || isNaN(Number(product.price))) {
+  if (
+    !product.price?.trim() ||
+    Number(product.price) < 0 ||
+    isNaN(Number(product.price))
+  ) {
     errors.price = "Invalid price";
   }
   if (product.colors?.length === 0) {
