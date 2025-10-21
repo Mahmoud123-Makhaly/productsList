@@ -4,18 +4,21 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { ChevronUpDownIcon } from "@heroicons/react/16/solid";
-import { CheckIcon } from "@heroicons/react/20/solid";
+import { ChevronUpDownIcon, CheckIcon } from "@heroicons/react/20/solid";
 import { categories } from "../../data/data";
-import type { ICategories } from "../../interfaces";
 interface ICategoriesProps {
-  selectedCategory: ICategories;
-  setSelectedCategory: (category: ICategories) => void;
+  selectedCategory: {
+    name: string;
+    imageURL: string;
+  };
+  setSelectedCategory: (category: { name: string; imageURL: string }) => void;
 }
 function Select({ selectedCategory, setSelectedCategory }: ICategoriesProps) {
   return (
     <Listbox value={selectedCategory} onChange={setSelectedCategory}>
-      <label htmlFor="">Category</label>
+      <div>
+        <label htmlFor="">Category</label>
+      </div>
       <div className="relative  w-full">
         <ListboxButton className="grid w-full cursor-default grid-cols-1   rounded-md bg-white py-3 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 sm:text-sm/6">
           <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">
